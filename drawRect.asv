@@ -1,0 +1,31 @@
+function [ newImage ] = drawRect( image, upperLeftCorner, width, length )
+% Draw a rectangle in the original image.
+% Input: image - the original image; upperLeftCorner - a row vector
+% represent the pos of the upper left corner of the rectangle; width - the
+% width of the rectangle; length - the length of the rectangle.
+
+% Compute the upper right corner.
+upperRightCorner(1) = upperLeftCorner(1);
+upperRightCorner(2) = min(size(image, 2), upperLeftCorner(2) + width);
+
+% Compute the lower left corner.
+lowerLeftCorner(1) = max(1, upperLeftCorner(1) - length);
+lowerLeftCorner(2) = upperLeftCorner(2);
+
+% Compute the lower right corner.
+lowerRightCorner(1) = lowerLeftCorner(1);
+lowerRightCorner(2) = upperRightCorner(2);
+
+% Draw upper line.
+newImage = drawLine(image, upperLeftCorner, upperRightCorner);
+end
+
+function [ newImage ] = drawLine( image, point1, point2 )
+% Draw a line between the two points.
+
+newImage = image;
+if (point1(1) == point2(1))
+    newImage(:, min(point1(
+end
+end
+

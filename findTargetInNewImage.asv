@@ -1,0 +1,33 @@
+function [ newPos ] = findTargetInNewImage( targetDF, image, startPos, params )
+% Find the target patch in the new image and return its upper left corner
+% position.
+
+% Define the displacement.
+dx = [0; 0; -1; 1];
+dy = [-1; 1; 0; 0];
+
+% Initialize variables.
+currentPos = startPos;
+startPatch = image(startPos(1) : startPos(1) + params.wsize(1) - 1, startPos(2) : startPos(2) + params.wsize(2) - 1);
+minDist = computeDistDF(targetDF, imageToDF(startPatch, params));
+dist = -1 * ones(size(image, 1), size(image, 2));
+dist(startPos(1), startPos(2)) = minDist;
+
+while true 
+    for i = 1 : 4 
+        x = currentPos(1) + dx;
+        y = currentPos(2) + dy;
+        
+        if inboard(x, y, size(image))
+            if (dist(x, y) == -1)
+                patch = image(x : x + params.wsize(1) - 1, y : y + params.wsize(2) - 1);
+                currentDist = computeDistDF(targetDF, imageToDF(patch, params));
+                dist(x, y) = currentDist;
+            else
+                
+            end
+        end
+    end
+end
+end
+
